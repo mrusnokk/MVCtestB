@@ -1,6 +1,23 @@
 ﻿@{
-    ViewData["Title"] = "Privacy Policy";
+	ViewData["Title"] = "Privacy Policy";
+	Kurzy data = ViewBag.kurzy;
+	double x = 0;
 }
-<h1>@ViewData["Title"]</h1>
-
-<p>Use this page to detail your site's privacy policy.</p>
+@if (data?.kurzy != null)
+{
+	@foreach (var m in ViewBag.select)
+	{
+		x = 0;
+		@foreach (var n in data.kurzy)
+		{
+			@if (@n.kod == m.penize)
+			{
+				x = n.kurz;
+				x = m.Castka/x;
+			}
+		
+		}
+		
+		<p>@m.Jmeno | @m.Castka | @m.penize | @m.CisloUctu | @x</p>
+	}
+}

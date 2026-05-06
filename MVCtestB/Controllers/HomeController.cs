@@ -7,6 +7,7 @@ namespace MVCtestB.Controllers
     public class HomeController : Controller
     {
         public Api _api = new Api();
+        public dbService _db = new dbService();
         public async Task<IActionResult> Index()
         {
             
@@ -16,19 +17,23 @@ namespace MVCtestB.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(MainFormModel model)
         {
-            if (!ModelState.IsValid) {
+            if (!ModelState.IsValid)
+            {
                 ViewBag.kurzy = await _api.getJson();
                 return View(model);
             }
-            
+
             ViewBag.kurzy = await _api.getJson();
-            return View(model);
+
+            _db.Insert(model);
+            return RedirectToAction("Privacy");
+
         }
 
-
-
-        public IActionResult Privacy()
+        public async Task<IActionResult> Privacy()
         {
+            ViewBag.select = _db.Get();
+            ViewBag.kurzy = await _api.getJson();
             return View();
         }
 

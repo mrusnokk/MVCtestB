@@ -1,15 +1,40 @@
 ﻿@model MainFormModel;
 @{
-    ViewData["Title"] = "Home Page";
-    Kurzy data = ViewBag.kurzy;
+	ViewData["Title"] = "Home Page";
+	Kurzy data = ViewBag.kurzy;
 }
 
+@* @foreach (var k in data.kurzy)
+{
+	<p>@k.kod</p>
+} *@
+
 <form asp-action="Index" method="post">
-    <div asp-validation-summary="All" class="bg-danger"></div>
+	<div asp-validation-summary="All" class="bg-danger"></div>
 
-    <label asp-for="Jmeno" class="form-label">Jmeno</label>
-    <input asp-for="Jmeno" class="form-control"/>
+	<label asp-for="Jmeno" class="form-label">Jmeno</label>
+	<input asp-for="Jmeno" class="form-control" />
 
-    <button type="submit" class="btn btn-primary">Send</button>
+	<label asp-for="Castka" class="form-label">Castka</label>
+	<input asp-for="Castka" class="form-control" />
+
+	<label asp-for="penize" class="form-label">Mena</label>
+	<select asp-for="penize" class="form-select">
+		@if (data.kurzy != null)
+		{
+			@foreach (var k in data.kurzy)
+			{
+				<option value = "@k.kod">
+					@k.kod
+				</option>
+			}
+		}
+	</select>
+
+	<label asp-for="CisloUctu" class="form-label">Cislo uctu</label>
+	<input asp-for="CisloUctu" class="form-control" />
+
+
+	<button type="submit" class="btn btn-primary">Send</button>
 
 </form>
